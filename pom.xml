@@ -2,19 +2,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.mobico.sviperll</groupId>
-    <artifactId>sviperll-parent</artifactId>
+    <artifactId>sviperll-maven-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>sviperll-parent</name>
+    <name>sviperll-maven-parent</name>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
     <scm>
-        <connection>scm:git:git://github.com/sviperll/sviperll-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:sviperll/sviperll-parent.git</developerConnection>
-        <url>https://github.com/sviperll/sviperll-parent</url>
+        <connection>scm:git:git://github.com/sviperll/sviperll-maven-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:sviperll/sviperll-maven-parent.git</developerConnection>
+        <url>https://github.com/sviperll/sviperll-maven-parent</url>
     </scm>
     <build>
         <plugins>
