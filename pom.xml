@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.mobico.sviperll</groupId>
     <artifactId>sviperll-maven-parent</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>sviperll-maven-parent</name>
     <parent>
