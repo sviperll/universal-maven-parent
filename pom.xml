@@ -1,35 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.sviperll</groupId>
-    <artifactId>sviperll-maven-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>sviperll-maven-parent-6</artifactId>
+    <name>sviperll-maven-parent-6</name>
+    <version>2.0</version>
     <packaging>pom</packaging>
-    <name>sviperll-maven-parent</name>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <scm>
-        <connection>scm:git:git://github.com/sviperll/sviperll-maven-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:sviperll/sviperll-maven-parent.git</developerConnection>
-        <url>https://github.com/sviperll/sviperll-maven-parent</url>
+        <connection>scm:git:git://github.com/sviperll/sviperll-maven-parent-6.git</connection>
+        <developerConnection>scm:git:git@github.com:sviperll/sviperll-maven-parent-6.git</developerConnection>
+        <url>https://github.com/sviperll/sviperll-maven-parent-6</url>
     </scm>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
-                    <compilerArguments>
-                        <Xlint />
-                    </compilerArguments>
+                    <forceJavacCompilerUse>false</forceJavacCompilerUse>
+                    <fork>false</fork>
+                    <compilerArgs>
+                        <arg>-Xlint</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -45,6 +50,9 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <!-- 2.2 ,2.3 and 2.4 doesn't work with git -->
                 <version>2.1</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -66,7 +74,28 @@
             </plugin>
         </plugins>
     </build>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <profiles>
+        <profile>
+            <id>bootclasspath-specification</id>
+            <activation>
+                <property>
+                    <name>env.JDK6_HOME</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration combine.self="append">
+                            <fork>true</fork>
+                            <compilerArgs>
+                              <arg>-bootclasspath</arg><arg>${env.JDK6_HOME}/jre/lib/rt.jar</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
