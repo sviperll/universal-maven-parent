@@ -28,12 +28,22 @@
                     <source>1.6</source>
                     <target>1.6</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>
+
+                    <!-- Compiler plugin uses Java compiler API since version 3.0.
+                         Usage of compiler API is much better than forking javac executable.
+                         Compiler API is much faster as it's run in same process.
+                         And most importatly ALL compiler messages are printed by maven.
+                         When standalone javac executable is run maven parses it's output and
+                         some messages are lost in the process!!! -->
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
                     <useIncrementalCompilation>true</useIncrementalCompilation>
                     <fork>false</fork>
+
+
+                    <!-- Verbose makes java compiler to produce detailed log of it's actions -->
                     <verbose>false</verbose>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
                     <compilerArgs>
                         <arg>-Xlint</arg>
                     </compilerArgs>
@@ -45,6 +55,13 @@
                 <version>2.6</version>
                 <executions>
                     <execution>
+                        <!--
+                          This is important.
+                          If your project contains annotation processor than it must be compiled without
+                          services file otherwise Java compiler fail silently because
+                          it can't find annotation processor stated in this file because
+                          annotation processor is not compiled yet!
+                          -->
                         <id>remove-annotation-processor-services-meta-info</id>
                         <phase>generate-sources</phase>
                         <goals>
@@ -73,8 +90,11 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <!--
+                          Services file for annotation processors must be copied to output directory
+                          when all java files are compiled (including annotation processors)
+                          -->
                         <id>copy-annotation-processor-services-meta-info</id>
-                        <!-- here the phase you need -->
                         <phase>process-classes</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -125,6 +145,11 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
+                    <!--
+                      Do not copy annotation processor services file. It's done by
+                      another (copy-annotation-processor-services-meta-info)
+                      execution of resources plugin
+                      -->
                     <exclude>META-INF/services/javax.annotation.processing.Processor</exclude>
                 </excludes>
             </resource>
@@ -132,6 +157,21 @@
     </build>
     <profiles>
         <profile>
+            <!--
+                Set bootclasspath and use standalone javac executable to compile java
+                when JDK6_HOME environment variable is set.
+
+                It is recomended to compile without JDK6_HOME variable during development and
+                to compile with JDK6_HOME only when all errors and warnings are cleared.
+
+                When you compile without JDK6_HOME maven uses Java compiler API to compile project.
+                When you compile with JDK6_HOME maven always forks javac executable.
+
+                Forking javac is slow. Another drawback is error messages. When compiler API is used
+                all compiler messages are passed back to maven and correctly printed.
+                When javac executable is used maven has to process and parse it's output, this
+                process is prone to errors and causes several warnings not to be outputed...
+            -->
             <id>bootclasspath-specification</id>
             <activation>
                 <property>
