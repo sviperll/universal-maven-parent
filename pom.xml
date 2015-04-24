@@ -3,7 +3,7 @@
     <groupId>com.github.sviperll</groupId>
     <artifactId>sviperll-maven-parent-6</artifactId>
     <name>sviperll-maven-parent-6</name>
-    <version>3.3-SNAPSHOT</version>
+    <version>4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -32,6 +32,65 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <failOnWarning>true</failOnWarning>
+                    <ignoredUnusedDeclaredDependencies combine.children="append">
+                        <ignoredUnusedDeclaredDependency>junit:junit:*:*</ignoredUnusedDeclaredDependency>
+                        <ignoredUnusedDeclaredDependency>com.google.code.findbugs:annotations:*:*</ignoredUnusedDeclaredDependency>
+                        <ignoredUnusedDeclaredDependency>com.google.code.findbugs:jsr305:*:*</ignoredUnusedDeclaredDependency>
+                    </ignoredUnusedDeclaredDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <phase>process-test-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+                We should probably replace default compile plugin with takari.
+                Takari implements very good incremental builds.
+                Takari shows all warnings from previous build even if nothing is rebuild this time!!!
+                But we doesn't enable it now since it is not ready yet...
+            -->
+            <plugin>
+                <groupId>io.takari.maven.plugins</groupId>
+                <artifactId>takari-lifecycle-plugin</artifactId>
+                <version>1.11.3</version> <!-- <version>1.12.0</version> -->
+                <configuration>
+                    <accessRulesViolation>error</accessRulesViolation>
+                    <!--
+                         Eclipse JDT seems not to be ready for prime time.
+                         javax.lang.model.util.Elements#asMemberOf is not working in Eclipse...
+                    -->
+                    <compilerId>javac</compilerId><!-- <compilerId>jdt</compilerId> -->
+                    <proc>proc</proc>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+
+                    <verbose>false</verbose>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>none</phase><!-- Change to compile to enable -->
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
@@ -49,8 +108,6 @@
                     <useIncrementalCompilation>true</useIncrementalCompilation>
                     <fork>false</fork>
 
-
-                    <!-- Verbose makes java compiler to produce detailed log of it's actions -->
                     <verbose>false</verbose>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
@@ -58,6 +115,15 @@
                         <arg>-Xlint</arg>
                     </compilerArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase><!-- Change to none to disable -->
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -222,6 +288,29 @@
                                 <arg>${env.JDK6_HOME}/jre/lib/rt.jar</arg>
                             </compilerArgs>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>default-compile</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.takari.maven.plugins</groupId>
+                        <artifactId>takari-lifecycle-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-compile</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <!-- Use original maven compiler plugin -->
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
