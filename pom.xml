@@ -6,9 +6,9 @@
     <packaging>pom</packaging>
     <name>universal-maven-parent</name>
     <description>Artifact to use as universal maven parent</description>
-    <url>https://github.com/sviperll/ozymandias/tree/master/maven-parent</url>
+    <url>https://github.com/sviperll/universal-maven-parent</url>
     <properties>
-        <ozymandias.version>0.17</ozymandias.version>
+        <ozymandias.version>0.18</ozymandias.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
@@ -23,6 +23,37 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <developers>
+        <developer>
+            <id>sviperll</id>
+            <name>Victor Nazarov</name>
+            <email>asviraspossible@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/sviperll/universal-maven-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:sviperll/universal-maven-parent.git</developerConnection>
+        <url>https://github.com/sviperll/universal-maven-parent</url>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/sviperll/universal-maven-parent/issues</url>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>The BSD 3-Clause License</name>
+            <url>http://opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <pluginRepositories>
         <pluginRepository>
             <id>synergian-repo</id>
@@ -843,17 +874,17 @@
             </properties>
         </profile>
         <profile>
-            <id>release-pitest-report</id>
-            <properties>
-                <profile.provides>release-pitest-report-choice</profile.provides>
-                <profile.depends>pitest-report-implementation,pitest-report</profile.depends>
-            </properties>
-        </profile>
-        <profile>
             <id>no-release-pitest-report</id>
             <properties>
                 <profile.provides>release-pitest-report-choice</profile.provides>
                 <profile.depends>!pitest-report-implementation,!pitest-report</profile.depends>
+            </properties>
+        </profile>
+        <profile>
+            <id>release-pitest-report</id>
+            <properties>
+                <profile.provides>release-pitest-report-choice</profile.provides>
+                <profile.depends>pitest-report-implementation,pitest-report</profile.depends>
             </properties>
         </profile>
         <profile>
