@@ -1,12 +1,10 @@
-maven-parent: Generally usefull maven parent artifact
+universal-maven-parent: Generally usefull maven parent artifact
 =====================================================
-
-Part of [ozymandias](https://github.com/sviperll/ozymandias).
 
 Usage
 -----
 
-Set `maven-parent` as parent project and activate required profiles with `parent.profile.activate` property.
+Set `universal-maven-parent` as parent project and activate required profiles with `parent.profile.activate` property.
 Profile activation is implemented with [maven-profiledep-extension](https://github.com/sviperll/ozymandias/tree/master/maven-profiledep-extension)
 
 ```xml
@@ -14,8 +12,8 @@ Profile activation is implemented with [maven-profiledep-extension](https://gith
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.sviperll</groupId>
-        <artifactId>maven-parent</artifactId>
-        <version>0.10</version>
+        <artifactId>universal-maven-parent</artifactId>
+        <version>0.18</version>
     </parent>
     <groupId>group</groupId>
     <artifactId>myartifact</artifactId>
@@ -78,3 +76,7 @@ are resolved and same version number is chosen for same artifacts.
 
 Do not deploy artifacts to maven repository.
 No plugins are executed on deploy phase.
+
+### pitest-report ###
+
+Generate [PITest](http://pitest.org/) code-coverage reports on release
