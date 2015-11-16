@@ -8,8 +8,14 @@
     <description>Artifact to use as universal maven parent</description>
     <url>https://github.com/sviperll/universal-maven-parent</url>
     <properties>
-        <ozymandias.version>0.18</ozymandias.version>
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <ozymandias.version>0.20</ozymandias.version>
+
+        <!--
+            Versions since 3.2 doesn't work with annotation processors.
+            You'll need to always perform clean rebuilds to use these versions
+            otherwise you'll get duplicate class error
+         -->
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
