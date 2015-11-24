@@ -13,7 +13,7 @@ Profile activation is implemented with [maven-profiledep-extension](https://gith
     <parent>
         <groupId>com.github.sviperll</groupId>
         <artifactId>universal-maven-parent</artifactId>
-        <version>0.18</version>
+        <version>0.20</version>
     </parent>
     <groupId>group</groupId>
     <artifactId>myartifact</artifactId>
