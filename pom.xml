@@ -8,7 +8,7 @@
     <description>Artifact to use as universal maven parent</description>
     <url>https://github.com/sviperll/universal-maven-parent</url>
     <properties>
-        <ozymandias.version>0.20</ozymandias.version>
+        <ozymandias.version>0.22</ozymandias.version>
 
         <!--
             Versions since 3.2 doesn't work with annotation processors.
