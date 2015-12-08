@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.sviperll</groupId>
     <artifactId>universal-maven-parent</artifactId>
-    <version>0.21</version>
+    <version>0.21-successor-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>universal-maven-parent</name>
     <description>Artifact to use as universal maven parent</description>
@@ -40,7 +40,7 @@
         <connection>scm:git:git://github.com/sviperll/universal-maven-parent.git</connection>
         <developerConnection>scm:git:git@github.com:sviperll/universal-maven-parent.git</developerConnection>
         <url>https://github.com/sviperll/universal-maven-parent</url>
-        <tag>universal-maven-parent-0.21</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
