@@ -40,7 +40,7 @@ Use version 1.7 of java language and runtime
 
 ### java8 ###
 
-Use version 1.7 of java language and runtime
+Use version 1.8 of java language and runtime
 
 ### bootclasspath ###
 
